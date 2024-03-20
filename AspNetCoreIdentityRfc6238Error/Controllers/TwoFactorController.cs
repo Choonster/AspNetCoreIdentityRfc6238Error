@@ -33,7 +33,7 @@ namespace AspNetCoreIdentityRfc6238Error.Controllers
                 }
             }
 
-            var verificationCode = "INVALID_2FA_CODE";
+            var verificationCode = "000000"; // Not a real code
 
             var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
 

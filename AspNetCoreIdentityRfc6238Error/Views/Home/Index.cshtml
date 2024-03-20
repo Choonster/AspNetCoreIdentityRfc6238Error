@@ -1,21 +1,36 @@
 ﻿<main>
     <section class="row" aria-labelledby="aspnetTitle">
         <h1 id="aspnetTitle">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS, and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
     </section>
     <div class="row">
 
         <button id="runTest" class="btn btn-danger">Test 2FA</button>
 
-        <code><pre id="testResult"></pre></code>
+        <pre><code id="testResult"></code></pre>
 
     </div>
 </main>
 
-<script>
-    $(function ($) {
+@section scripts {
+    <script>
+        $(function ($) {
+            $("#runTest").on("click", function (event) {
+                $.get({
+                    url: "/2fa/test",
+                    success: function (data) {
+                        var stringContent = typeof data === "string" ? data : JSON.stringify(data);
 
-    });
+                        stringContent = "Status: 200\n\n" + stringContent;
 
-</script>
+                        $("#testResult").text(stringContent);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        var stringContent = "Status: " + textStatus + " Error: " + errorThrown + "\nResponse Text: " + jqXHR.responseText;
+
+                        $("#testResult").text(stringContent);
+                    }
+                });
+            })
+        });
+    </script>
+}
